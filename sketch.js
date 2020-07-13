@@ -1,12 +1,12 @@
 var roomimg, garimg, plimg, waterimg, foodp1, foodp2, foodp3, zomp1, zomp2, toolp1, toolp2, toolp3, rockp1, runbg;
 
 var player, zombie = [],
-  obs, button;
+  obs, button, g = 0;
 var gamestate = "welcome";
 var water1, water2, water3, food1, food2, food3, tool1, tool2, tool3;
 var ground, i = 0;
-var rtime = 10,
-  gtime = 10,
+var rtime = 7,
+  gtime = 7,
   watercount = 0,
   foodcount = 0,
   totfood = 0,
@@ -122,14 +122,17 @@ function draw() {
   
   else if (gamestate == "room") {
     background(roomimg);
-    water1.visible = true;
-    water2.visible = true;
-    water3.visible = true;
-    food1.visible = true;
-    food2.visible = true;
-    food3.visible = true;
-    ground.visible = false;
-    button.hide()
+    if(g == 0){
+      water1.visible = true;
+      water2.visible = true;
+      water3.visible = true;
+      food1.visible = true;
+      food2.visible = true;
+      food3.visible = true;
+      ground.visible = false;
+      g = 1;
+    }
+      button.hide()
 
     if (frameCount % 30 == 0) {
       rtime -= 1;
@@ -142,6 +145,25 @@ function draw() {
       gamestate = "garage";
     }
 
+    if(mousePressedOver(water1)){
+      water1.visible = false;
+    }
+    if(mousePressedOver(water2)){
+      water2.visible = false;
+    }
+    if(mousePressedOver(water3)){
+      water3.visible = false;
+    }
+    if(mousePressedOver(food1)){
+      food1.visible = false;
+    }
+    if(mousePressedOver(food2)){
+      food2.visible = false;
+    }
+    if(mousePressedOver(food3)){
+      food3.visible = false;
+    }
+
     strokeWeight(3);
     stroke("BLACK");
     fill("RED");
@@ -151,14 +173,17 @@ function draw() {
 
   else if (gamestate == "garage") {
     background(garimg);
-    water1.visible = true;
-    water2.visible = true;
-    water3.visible = true;
-    food1.visible = true;
-    food2.visible = true;
-    food3.visible = true;
-    ground.visible = false;
-    button.hide();
+    if(g == 1){
+      water1.visible = true;
+      water2.visible = true;
+      water3.visible = true;
+      food1.visible = true;
+      food2.visible = true;
+      food3.visible = true;
+      ground.visible = false;
+      g = 0;
+    }
+      button.hide();
 
     food1.x = 600;
     food1.y = 220;
@@ -186,6 +211,25 @@ function draw() {
       gamestate = "run";
     }
 
+    if(mousePressedOver(water1)){
+      water1.visible = false;
+    }
+    if(mousePressedOver(water2)){
+      water2.visible = false;
+    }
+    if(mousePressedOver(water3)){
+      water3.visible = false;
+    }
+    if(mousePressedOver(food1)){
+      food1.visible = false;
+    }
+    if(mousePressedOver(food2)){
+      food2.visible = false;
+    }
+    if(mousePressedOver(food3)){
+      food3.visible = false;
+    }
+    
     strokeWeight(3);
     stroke("BLACK");
     fill("RED");
