@@ -2,7 +2,7 @@ var roomimg, garimg, plimg, waterimg, foodp1, foodp2, foodp3, zomp1, zomp2, tool
 
 var player, zombie = [], p = 0,
   obs, button, invisg;
-var gamestate = "run";
+var gamestate = "welcome";
 var water1, water2, water3, food1, food2;
 var ground, i = 0;
 var rtime = 5,
@@ -223,7 +223,7 @@ function draw() {
   
   else if (gamestate == "run") {
     background("yellow");
-    if(p == 0){
+    if(p == 2 || p == 0){
       water1.visible = false;
       water2.visible = false;
       water3.visible = false
@@ -231,12 +231,14 @@ function draw() {
       food2.visible = false;
       food3.visible = false;
       ground.visible = true;
-      player.scale = 0.5;
+      player.scale = 0.7;
       player.x = 275
       player.y = 330
       button.hide()
       p = 3;
     }
+    player.setCollider("rectangle", 0, 0, 110, 200);
+    player.debug = true;
 
     if (frameCount % 150 == 0) {
       zombie[i] = createSprite(50, 330, 10, 10);
@@ -245,16 +247,17 @@ function draw() {
     }
 
     if(keyDown("space") && player.y >= 300){
-      player.velocityY = -12;
+      player.velocityY = -20;
     }
 
     player.velocityY += 1;
     if (frameCount % 100 == 0) {
       obs = createSprite(720, 360, 50, 50);
-      obs.velocityX = -4;
-      // obs.addImage(rockp1);
-      // obs.scale = 0.2
-      obsgrp.add(obs)
+      obs.velocityX = -6;
+      obs.addImage(rockp1);
+      obs.scale = 0.2
+      obsgrp.add(obs);
+      obs.debug = true;
     }
     
     player.collide(invisg);
@@ -262,13 +265,16 @@ function draw() {
     if(obsgrp.isTouching(player)){
       gamestate = "over";
     }
-    ground.velocityX = -4
+    ground.velocityX = -6;
     if(ground.x < 0){
       ground.x = 360;
     }
   }
   else if (gamestate = "over"){
     background("black");
+    player.scale = 0.7;
+    player.x = 275
+    player.y = 330
     water1.visible = false;
     water2.visible = false;
     water3.visible = false
@@ -281,6 +287,15 @@ function draw() {
     fill("RED");
     text("GAME OVER", 260, 150)
     text("THANK YOU FOR PLAYING", 170, 220)
+
+    var playagain;
+    playagain = createButton("PLAY AGAIN");
+    playagain.position(380, 280);
+    playagain.mousePressed(function() {
+      gamestate = "welcome";
+      playagain.hide();
+    })
+
   }
 
   drawSprites();
